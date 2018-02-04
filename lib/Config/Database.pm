@@ -4,12 +4,15 @@ use utf8;
 
 sub new {
   my $class = shift;
-  my $driver   = "SQLite";
-  my $database = "/home/pepe/Documentos/perl/accesos/db/db_accesos.db";
-  my $dsn = "DBI:$driver:dbname=$database";
-  my $userid = "";
-  my $password = "";
-  my $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1, sqlite_unicode => 1 })
+  my $driver   = 'Firebird';
+  my $database = '/home/pepe/Documentos/firebird/gestion/gestion.fdb;ib_charset=UTF8';
+  my $dsn = 'dbi:'. $driver . ':db=' . $database;
+  my $userid = 'SYSDBA';
+  my $password = '123';
+  print("1 ++++++++++++++++++++++++++++++\n");
+  print($dsn);
+  print("\n2 ++++++++++++++++++++++++++++++\n");
+  my $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1, ib_enable_utf8 => 1 })
     or die $DBI::errstr;
 
   my $self = {

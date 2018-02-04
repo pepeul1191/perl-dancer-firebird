@@ -9,9 +9,6 @@ use lib "$FindBin::Bin/../lib";
 # use this block if you don't need middleware, and only have a single target Dancer app to run here
 use Config::App;
 use Routes::Pais;
-
-#Config::App->to_app;
-
 use Plack::Builder;
 
 builder {
