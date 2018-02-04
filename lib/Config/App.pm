@@ -1,4 +1,4 @@
-package Routes::App;
+package Config::App;
 use Dancer2;
 
 our $VERSION = '0.1';

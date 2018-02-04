@@ -7,17 +7,17 @@ use lib "$FindBin::Bin/../lib";
 
 
 # use this block if you don't need middleware, and only have a single target Dancer app to run here
-use Routes::App;
+use Config::App;
 use Routes::Pais;
 
-Routes::App->to_app;
+#Config::App->to_app;
 
 use Plack::Builder;
 
 builder {
     enable 'Deflater';
-    Routes::App->to_app;
-    mount '/'      => Routes::App->to_app;
+    Config::App->to_app;
+    mount '/'      => Config::App->to_app;
     mount '/pais'      => Routes::Pais->to_app;
 }
 
