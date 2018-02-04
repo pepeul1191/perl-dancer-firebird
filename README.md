@@ -1,0 +1,1 @@
+sudo cpanm Plack::Middleware::Deflater DBD::SQLite JSON JSON::Create JSON::XS Crypt::MCrypt Try::Tiny Plack::Loader::Shotgun
