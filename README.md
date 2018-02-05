@@ -42,7 +42,7 @@ Ejecutar el 'up' de las migraciones hasta un versión especifica:
 
 Crear Vista de distrito/provincia/departamento
 
-    >> CREATE VIEW "vw_distrito_provincia_departamento" AS select "DI"."id" AS "id",concat("DI"."nombre",', ',"PR"."nombre",', ',"DE"."nombre") AS "nombre" from (("tb_distrito" "DI" join "tb_provincia" "PR" on(("DI"."id_provincia" = "PR"."id"))) join "tb_departamento" "DE" on(("PR"."id_departamento" = "DE"."id"))) limit 2000;
+    >> CREATE VIEW vw_distrito_provincia_departamento AS select DI.id AS id,concat(DI.nombre,', ',PR.nombre,', ',DE.nombre) AS nombre from ((distritos DI join provincias PR on((DI.provincia_id = PR.id))) join departamentos DE on((PR.departamento_id = DE.id))) limit 2000;
 
 Tipos de Datos de Columnas
 
