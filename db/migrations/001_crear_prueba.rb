@@ -1,9 +1,5 @@
 Sequel.migration do
-	up do
-    create_table(:paises) do
-      primary_key :id
-      String :nombre, null: false, size: 30
-    end
+  up do
     create_table(:pruebas) do
       primary_key :id
       String :nombres, null: false, size: 30
@@ -14,7 +10,6 @@ Sequel.migration do
 	end
 
 	down do
-    drop_table(:paises)
     drop_table(:pruebas)
 	end
 end
