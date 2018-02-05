@@ -28,29 +28,33 @@ Para imprimir variables:
 
 Ejecutar migración
 
-  $ sequel -m path/to/migrations postgres://host/database
-  $ sequel -m path/to/migrations sqlite://db/db_estaciones.db
-  $ sequel -m path/to/migrations mysql://root:123@localhost/gestion
+    $ sequel -m path/to/migrations postgres://host/database
+    $ sequel -m path/to/migrations sqlite://db/db_estaciones.db
+    $ sequel -m path/to/migrations mysql://root:123@localhost/gestion
 
 Ejecutar el 'down' de las migraciones de la última a la primera:
 
-  $ sequel -m db/migrations -M 0 mysql://root:123@localhost/gestion
+    $ sequel -m db/migrations -M 0 mysql://root:123@localhost/gestion
 
 Ejecutar el 'up' de las migraciones hasta un versión especifica:
 
-  $ sequel -m db/migrations -M #version mysql://root:123@localhost/gestion
+    $ sequel -m db/migrations -M #version mysql://root:123@localhost/gestion
+
+Crear Vista de distrito/provincia/departamento
+
+    >> CREATE VIEW "vw_distrito_provincia_departamento" AS select "DI"."id" AS "id",concat("DI"."nombre",', ',"PR"."nombre",', ',"DE"."nombre") AS "nombre" from (("tb_distrito" "DI" join "tb_provincia" "PR" on(("DI"."id_provincia" = "PR"."id"))) join "tb_departamento" "DE" on(("PR"."id_departamento" = "DE"."id"))) limit 2000;
 
 Tipos de Datos de Columnas
 
-  + :string=>String
-  + :integer=>Integer
-  + :date=>Date
-  + :datetime=>[Time, DateTime].freeze, 
-  + :time=>Sequel::SQLTime, 
-  + :boolean=>[TrueClass, FalseClass].freeze, 
-  + :float=>Float
-  + :decimal=>BigDecimal
-  + :blob=>Sequel::SQL::Blob
++ :string=>String
++ :integer=>Integer
++ :date=>Date
++ :datetime=>[Time, DateTime].freeze, 
++ :time=>Sequel::SQLTime, 
++ :boolean=>[TrueClass, FalseClass].freeze, 
++ :float=>Float
++ :decimal=>BigDecimal
++ :blob=>Sequel::SQL::Blob
 
 ---
 
