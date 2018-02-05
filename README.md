@@ -2,7 +2,7 @@
 
 Instalación de paquetes de CPANM
 
-    $ sudo apt install cpanminus libdbd-firebird-perl
+    $ sudo apt-get install cpanminus libdbd-firebird-perl libmysqlclient-dev
     $ curl -L http://cpanmin.us | perl - --sudo Dancer2
     $ sudo cpanm Plack::Middleware::Deflater DBD::Firebird JSON JSON::Create JSON::XS Crypt::MCrypt Try::Tiny Plack::Loader::Shotgun Plack::Handler::Starman
 
@@ -23,6 +23,34 @@ Para imprimir variables:
 
     #print("\nA\n");print($url);print("\nB\n");
     #print("\n");print Dumper(%temp);print("\n");
+
+### Migraciones
+
+Ejecutar migración
+
+  $ sequel -m path/to/migrations postgres://host/database
+  $ sequel -m path/to/migrations sqlite://db/db_estaciones.db
+  $ sequel -m path/to/migrations mysql://root:123@localhost/gestion
+
+Ejecutar el 'down' de las migraciones de la última a la primera:
+
+  $ sequel -m db/migrations -M 0 mysql://root:123@localhost/gestion
+
+Ejecutar el 'up' de las migraciones hasta un versión especifica:
+
+  $ sequel -m db/migrations -M #version mysql://root:123@localhost/gestion
+
+Tipos de Datos de Columnas
+
+  + :string=>String
+  + :integer=>Integer
+  + :date=>Date
+  + :datetime=>[Time, DateTime].freeze, 
+  + :time=>Sequel::SQLTime, 
+  + :boolean=>[TrueClass, FalseClass].freeze, 
+  + :float=>Float
+  + :decimal=>BigDecimal
+  + :blob=>Sequel::SQL::Blob
 
 ---
 
