@@ -1,14 +1,14 @@
 package Routes::Departamento;
 use Dancer2;
 use JSON;
-use JSON::XS 'decode_json';
+use JSON::XS;
 use Data::Dumper;
 use Try::Tiny;
 use strict;
 use warnings;
 use Model::Departamento;
 use utf8;
-use Encode qw(decode encode);
+use Encode;
 binmode STDOUT, ':utf8';
 
 hook before => sub {
@@ -20,7 +20,7 @@ get '/listar' => sub {
   my $departamento= $model->new();
   try {
     my  @rpta = $departamento->listar();
-    return decode('utf8', to_json \@rpta);
+    return Encode::decode('utf8', JSON::to_json \@rpta);
   }
   catch {
     my %rpta = ();
@@ -28,7 +28,7 @@ get '/listar' => sub {
     $rpta{'mensaje'} = 'Se ha producido un error en listar la tabla de departamentos';
     my @temp = ('Se ha producido un error en listar la tabla de departamentos', '' . $_);
     $rpta{'mensaje'} = [@temp];
-    return decode('utf8', to_json \@rpta);
+    return Encode::decode('utf8', JSON::to_json \%rpta);
   };
 };
 

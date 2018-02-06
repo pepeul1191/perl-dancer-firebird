@@ -4,7 +4,7 @@ Instalación de paquetes de CPANM
 
     $ sudo apt-get install cpanminus libdbd-firebird-perl libmysqlclient-dev
     $ curl -L http://cpanmin.us | perl - --sudo Dancer2
-    $ sudo cpanm Plack::Middleware::Deflater DBD::Firebird JSON JSON::Create JSON::XS Crypt::MCrypt Try::Tiny Plack::Loader::Shotgun Plack::Handler::Starman
+    $ sudo cpanm Plack::Middleware::Deflater DBD::SQLite DBD::mysql JSON JSON::Create JSON::XS Crypt::MCrypt Try::Tiny Plack::Loader::Shotgun Plack::Handler::Starman
 
 Arrancar Dancer:
 

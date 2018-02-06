@@ -11,7 +11,6 @@ Sequel.migration do
 				line_array = line.split('::')
 				id = line_array[0]
 				nombre = line_array[1].strip
-				#puts id + " - " + nombre
 				DB[:departamentos].insert(id: id, nombre: nombre, pais_id: 1)
       end
       file = File.new('db/data/provincias.txt', 'r')
@@ -20,7 +19,6 @@ Sequel.migration do
 				id = line_array[0]
         nombre = line_array[1]
         departamento_id = line_array[2].strip
-				#puts id + " - " + nombre
 				DB[:provincias].insert(id: id, nombre: nombre, departamento_id: departamento_id)
       end
       file = File.new('db/data/distritos.txt', 'r')
@@ -29,7 +27,6 @@ Sequel.migration do
 				id = line_array[0]
 				nombre = line_array[1]
         provincia_id = line_array[2].strip
-				#puts id + " - " + nombre
 				DB[:distritos].insert(id: id, nombre: nombre, provincia_id: provincia_id)
 			end
 		end
@@ -37,6 +34,7 @@ Sequel.migration do
 
 	down do
 		DB = Sequel.connect('sqlite://db/gestion.db')
+		#DB = Sequel.connect('mysql2://localhost/gestion?user=root&password=123')
     DB[:paises].delete
     DB[:departamentos].delete
     DB[:provincias].delete
