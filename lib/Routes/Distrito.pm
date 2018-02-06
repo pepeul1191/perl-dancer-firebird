@@ -33,6 +33,15 @@ get '/listar/:provincia_id' => sub {
   };
 };
 
+get '/buscar/:pais_id' => sub {
+  my $pais_id = param('pais_id');
+  my $nombre = Encode::encode_utf8(param('nombre'));
+  my $model = 'Model::Distrito';
+  my $Distrito= $model->new();
+  my @rpta = $Distrito->buscar($nombre, $pais_id);
+  return Encode::decode('utf8', JSON::to_json \@rpta);
+};
+
 post '/guardar' => sub {
   my $self = shift;
   my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
