@@ -8,16 +8,18 @@ use Plack::Builder;
 
 # use this block if you don't need middleware, and only have a single target Dancer app to run here
 use Config::App;
-use Routes::Pais;
+use Routes::Distrito;
 use Routes::Departamento;
+use Routes::Pais;
 use Routes::Provincia;
 
 builder {
     enable 'Deflater';
     Config::App->to_app;
     mount '/'      => Config::App->to_app;
-    mount '/pais'      => Routes::Pais->to_app;
     mount '/departamento'      => Routes::Departamento->to_app;
+    mount '/distrito'      => Routes::Distrito->to_app;
+    mount '/pais'      => Routes::Pais->to_app;
     mount '/provincia'      => Routes::Provincia->to_app;
 }
 
