@@ -13,6 +13,16 @@ sub new {
   return $self;
 }
 
+sub commit {
+  my($self) = @_;
+  $self->{_dbh}->commit;
+}
+
+sub rollback {
+  my($self) = @_;
+  $self->{_dbh}->rollback;
+}
+
 sub listar {
   my($self) = @_;
   my $sth = $self->{_dbh}->prepare('SELECT id, nombres, paterno, materno, correo FROM pruebas') 

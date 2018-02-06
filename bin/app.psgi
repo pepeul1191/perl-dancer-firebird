@@ -10,6 +10,7 @@ use Plack::Builder;
 use Config::App;
 use Routes::Pais;
 use Routes::Departamento;
+use Routes::Provincia;
 
 builder {
     enable 'Deflater';
@@ -17,6 +18,7 @@ builder {
     mount '/'      => Config::App->to_app;
     mount '/pais'      => Routes::Pais->to_app;
     mount '/departamento'      => Routes::Departamento->to_app;
+    mount '/provincia'      => Routes::Provincia->to_app;
 }
 
 =begin comment

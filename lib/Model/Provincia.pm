@@ -1,4 +1,4 @@
-package Model::Departamento;
+package Model::Provincia;
 use Config::Database;
 
 sub new {
@@ -24,9 +24,10 @@ sub rollback {
 }
 
 sub listar {
-  my($self) = @_;
-  my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM departamentos WHERE pais_id = 1;') 
+  my($self, $departamento_id) = @_;
+  my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM provincias WHERE departamento_id = ?;') 
     or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $departamento_id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   my @rpta;
   while (my $ref = $sth->fetchrow_hashref()) {
@@ -37,11 +38,11 @@ sub listar {
 }
 
 sub crear {
-  my($self, $nombre, $pais_id) = @_;
-  my $sth = $self->{_dbh}->prepare('INSERT INTO departamentos (nombre, pais_id) VALUES (?,?)') 
+  my($self, $nombre, $departamento_id) = @_;
+  my $sth = $self->{_dbh}->prepare('INSERT INTO provincias (nombre, departamento_id) VALUES (?,?)') 
     or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $nombre);
-  $sth->bind_param( 2, $pais_id);
+  $sth->bind_param( 2, $departamento_id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   my $id_generated = $self->{_dbh}->last_insert_id(undef, undef, undef, undef );
   $sth->finish;
@@ -49,11 +50,11 @@ sub crear {
 }
 
 sub editar {
-  my($self, $id, $nombre, $pais_id) = @_;
-  my $sth = $self->{_dbh}->prepare('UPDATE departamentos SET nombre = ?, pais_id = ? WHERE id = ?') 
+  my($self, $id, $nombre, $departamento_id) = @_;
+  my $sth = $self->{_dbh}->prepare('UPDATE provincias SET nombre = ?, departamento_id = ? WHERE id = ?') 
     or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $nombre);
-  $sth->bind_param( 2, $pais_id);
+  $sth->bind_param( 2, $departamento_id);
   $sth->bind_param( 3, $id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   $sth->finish;
@@ -61,7 +62,7 @@ sub editar {
 
 sub eliminar {
   my($self, $id) = @_;
-  my $sth = $self->{_dbh}->prepare('DELETE FROM departamentos WHERE id = ?') 
+  my $sth = $self->{_dbh}->prepare('DELETE FROM provincias WHERE id = ?') 
     or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
