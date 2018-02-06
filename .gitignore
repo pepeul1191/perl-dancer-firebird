@@ -1,3 +1,4 @@
 .DS_Store
 Gemfile.lock
 .~lock.data.ods#
+db/gestion.db

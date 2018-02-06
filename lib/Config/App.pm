@@ -13,6 +13,10 @@ get '/' => sub {
   template 'index' => { 'title' => 'Gestion::App' };
 };
 
+get '/test/conexion' => sub {
+  return 'Conexión Ok'
+};
+
 get '/db/listar' => sub {
   my $model= 'Model::Prueba';
   my $prueba= $model->new();

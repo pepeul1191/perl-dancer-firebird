@@ -13,6 +13,16 @@ sub new {
   return $self;
 }
 
+sub commit {
+  my($self) = @_;
+  $self->{_dbh}->commit;
+}
+
+sub rollback {
+  my($self) = @_;
+  $self->{_dbh}->rollback;
+}
+
 sub listar {
   my($self) = @_;
   my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM departamentos;') 
@@ -27,10 +37,11 @@ sub listar {
 }
 
 sub crear {
-  my($self, $nombre) = @_;
-  my $sth = $self->{_dbh}->prepare('INSERT INTO departamentos (nombre) VALUES (?)') 
-      or die "prepare statement failed: $dbh->errstr()";
+  my($self, $nombre, $pais_id) = @_;
+  my $sth = $self->{_dbh}->prepare('INSERT INTO departamentos (nombre, pais_id) VALUES (?,?)') 
+    or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $nombre);
+  $sth->bind_param( 2, $pais_id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   my $id_generated = $self->{_dbh}->last_insert_id(undef, undef, undef, undef );
   $sth->finish;
@@ -38,11 +49,12 @@ sub crear {
 }
 
 sub editar {
-  my($self, $id, $nombre, $llave) = @_;
-  my $sth = $self->{_dbh}->prepare('UPDATE departamentos SET nombre = ? WHERE id = ?') 
-      or die "prepare statement failed: $dbh->errstr()";
+  my($self, $id, $nombre, $pais_id) = @_;
+  my $sth = $self->{_dbh}->prepare('UPDATE departamentos SET nombre = ?, pais_id = ? WHERE id = ?') 
+    or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $nombre);
-  $sth->bind_param( 2, $id);
+  $sth->bind_param( 2, $pais_id);
+  $sth->bind_param( 3, $id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   $sth->finish;
 }
@@ -50,7 +62,7 @@ sub editar {
 sub eliminar {
   my($self, $id) = @_;
   my $sth = $self->{_dbh}->prepare('DELETE FROM departamentos WHERE id = ?') 
-      or die "prepare statement failed: $dbh->errstr()";
+    or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   $sth->finish;

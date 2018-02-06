@@ -13,6 +13,8 @@ sub new {
     my $userid = 'root';
     my $password = '123';
     $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1, ib_enable_utf8 => 1 }) or die $DBI::errstr;
+    $dbh->{AutoCommit} = 0;  # enable transactions, if possible
+    $dbh->{RaiseError} = 1;
   }else{
     my $driver   = "SQLite";
     my $database = "db/gestion.db";
@@ -20,6 +22,8 @@ sub new {
     my $userid = "";
     my $password = "";
     $dbh = DBI->connect($dsn, $userid, $password, { RaiseError => 1 }) or die $DBI::errstr;
+    $dbh->{AutoCommit} = 0;  # enable transactions, if possible
+    $dbh->{RaiseError} = 1;
   }
   my $self = {
     _dbh => $dbh
