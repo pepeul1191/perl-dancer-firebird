@@ -34,7 +34,7 @@ get '/listar' => sub {
 
 post '/guardar' => sub {
   my $self = shift;
-  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));#decode_json(encode_utf8(param('data')));
+  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
   my @nuevos = @{$data->{"nuevos"}};
   my @editados = @{$data->{"editados"}};
   my @eliminados = @{$data->{"eliminados"}};
