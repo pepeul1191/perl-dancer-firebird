@@ -24,9 +24,10 @@ sub rollback {
 }
 
 sub listar {
-  my($self) = @_;
-  my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM departamentos WHERE pais_id = 1;') 
+  my($self, $pais_id) = @_;
+  my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM departamentos WHERE pais_id = ?;') 
     or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $pais_id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   my @rpta;
   while (my $ref = $sth->fetchrow_hashref()) {

@@ -15,11 +15,12 @@ hook before => sub {
   response_header 'X-Powered-By' => 'Perl Dancer 1.3202, Ubuntu';
 };
 
-get '/listar' => sub {
+get '/listar/:pais_id' => sub {
   my $model= 'Model::Departamento';
+  my $pais_id = param('pais_id');
   my $Departamento = $model->new();
   try {
-    my  @rpta = $Departamento->listar();
+    my  @rpta = $Departamento->listar($pais_id);
     return Encode::decode('utf8', JSON::to_json \@rpta);
   }
   catch {
