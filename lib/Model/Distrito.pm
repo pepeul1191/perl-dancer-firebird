@@ -23,6 +23,20 @@ sub rollback {
   $self->{_dbh}->rollback;
 }
 
+sub nombre {
+  my($self, $distrito_id) = @_;
+  my $sth = $self->{_dbh}->prepare('SELECT nombre FROM vw_distrito_provincia_departamento WHERE id = ?;') 
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $distrito_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my $rpta;
+  while (my $ref = $sth->fetchrow_hashref()) {
+    $rpta = $ref->{'nombre'};
+  }
+  $sth->finish;
+  return $rpta;
+}
+
 sub buscar {
   my($self, $nombre, $pais_id) = @_;
   my $sth = $self->{_dbh}->prepare('SELECT id, nombre FROM vw_distrito_provincia_departamento WHERE pais_id = ? AND nombre LIKE ? LIMIT 0,10;') 

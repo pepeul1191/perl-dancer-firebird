@@ -42,6 +42,14 @@ get '/buscar/:pais_id' => sub {
   return Encode::decode('utf8', JSON::to_json \@rpta);
 };
 
+get '/nombre/:distrito_id' => sub {
+  my $distrito_id = param('distrito_id');
+  my $model = 'Model::Distrito';
+  my $Distrito= $model->new();
+  my $rpta = $Distrito->nombre($distrito_id);
+  return Encode::decode('utf8', $rpta);
+};
+
 post '/guardar' => sub {
   my $self = shift;
   my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
