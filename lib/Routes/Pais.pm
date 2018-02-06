@@ -25,7 +25,6 @@ get '/listar' => sub {
   catch {
     my %rpta = ();
     $rpta{'tipo_mensaje'} = "error";
-    $rpta{'mensaje'} = 'Se ha producido un error en listar la tabla de paises';
     my @temp = ('Se ha producido un error en listar la tabla de paises', '' . $_);
     $rpta{'mensaje'} = [@temp];
     return Encode::decode('utf8', JSON::to_json \%rpta);
@@ -71,7 +70,6 @@ post '/guardar' => sub {
   } catch {
     #warn "got dbi error: $_";
     $rpta{'tipo_mensaje'} = "error";
-    $rpta{'mensaje'} = "Se ha producido un error en guardar la tabla de paises";
     my @temp = ("Se ha producido un error en guardar la tabla de paises", "" . $_);
     $rpta{'mensaje'} = [@temp];
     $Pais->rollback();
