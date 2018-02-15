@@ -144,8 +144,89 @@ def listar_razas
   end
 end
 
+def asociar_raza
+  RSpec.describe App do
+    describe '6. Asociar Raza a Tipo de Mascota: ' do
+      it '6.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '6.2 Asociar Raza a Tipo de Mascota' do
+        data = {
+          :nuevos => [
+            {
+              :id => 'tablaRazaTipo Mascota_481',
+              :nombre => 'Nombre raza 1',
+              :raza_id => 1,
+            },
+            {
+              :id => 'tablaRazaTipo Mascota_482',
+              :nombre => 'Nombre raza 2',
+              :raza_id => 2,
+            },
+          ],
+          :editados => [
+
+          ],
+          :eliminados => [],
+          :extra => {
+            :tipo_mascota_id => 1
+          }
+        }.to_json
+        url = 'tipo_mascota/asociar_raza?data=' + data
+        test = App.new(url)
+        test.post()
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Se ha registrado la asociación/deasociación de las razas al tipo de mascota')
+        expect(test.response.body).to include('nuevo_id')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
+def desasociar_raza
+  RSpec.describe App do
+    describe '7. Asociar Raza a Tipo de Mascota: ' do
+      it '7.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '7.2 Asociar Raza a Tipo de Mascota' do
+        data = {
+          :nuevos => [
+
+          ],
+          :editados => [
+
+          ],
+          :eliminados => [1,2],
+          :extra => {
+            :tipo_mascota_id => 1
+          }
+        }.to_json
+        url = 'tipo_mascota/asociar_raza?data=' + data
+        test = App.new(url)
+        test.post()
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Se ha registrado la asociación/deasociación de las razas al tipo de mascota')
+        expect(test.response.body).to include('nuevo_id')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
 #listar
 #crear
 #editar
 #eliminar
-listar_razas
+#listar_razas
+asociar_raza
+#desasociar_raza

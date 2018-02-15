@@ -95,4 +95,44 @@ get '/raza/:tipo_mascota_id' => sub {
   };
 };
 
+post '/asociar_raza' => sub {
+  my $self = shift;
+  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
+  my @nuevos = @{$data->{"nuevos"}};
+  my @eliminados = @{$data->{"eliminados"}};
+  my $tipo_mascota_id = $data->{"extra"}->{'tipo_mascota_id'};
+  my @array_nuevos;
+  my %rpta = ();
+  my $model= 'Model::TipoMascota';
+  my $TipoMascota= $model->new();
+  try {
+    for my $nuevo(@nuevos){
+      if ($nuevo) {
+        my $temp_id = $nuevo->{'id'};
+        my $raza_id = $nuevo->{'raza_id'};
+        my $id_generado = $TipoMascota->asociar_raza($raza_id, $tipo_mascota_id);
+        my %temp = ();
+        $temp{'temporal'} = $temp_id;
+        $temp{'nuevo_id'} = $id_generado;
+        push @array_nuevos, {%temp};
+      }
+    }
+    for my $eliminado(@eliminados){
+      $TipoMascota->desasociar_raza($eliminado);
+    }
+    $rpta{'tipo_mensaje'} = "success";
+    my @temp = ("Se ha registrado la asociación/deasociación de las razas al tipo de mascota", [@array_nuevos]);
+    $rpta{'mensaje'} = [@temp];
+    $TipoMascota->commit();
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error en asociar/deasociar las razas al tipo de mascota", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $TipoMascota->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
 1;
