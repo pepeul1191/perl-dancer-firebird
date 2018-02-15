@@ -115,7 +115,7 @@ def editar
   end
 end
 
-#crear
+crear
 #cambiar_estado
 #cambiar_foto
-editar
+#editar

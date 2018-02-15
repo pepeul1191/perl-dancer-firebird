@@ -4,7 +4,7 @@ Sequel.migration do
   up do
     create_table(:mascotas) do
       primary_key :id
-      String :nombres, null: false, size: 40
+      String :nombre, null: false, size: 40
       String :descripcion, null: false
       Date :nacimiento, null: false
       TrueClass :certificado_raza, null: true
