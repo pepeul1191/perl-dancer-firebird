@@ -8,7 +8,6 @@ Sequel.migration do
       String :descripcion, null: false
       Date :nacimiento, null: false
       TrueClass :certificado_raza, null: true
-      Integer :siguiendo, null: false, default: 0
     end
 
     alter_table(:mascotas) do
