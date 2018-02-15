@@ -9,7 +9,7 @@ Sequel.migration do
       String :telefono, null: false, size: 25
       String :correo, null: false, size: 40
       String :usuario_id, null: false, size: 40
-      String :cuidaddor_foto_id, null: false, size: 40
+      String :cuidaddor_foto_id, null: true, size: 40
     end
 
     alter_table(:criadores) do
