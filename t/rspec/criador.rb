@@ -58,5 +58,31 @@ def cambiar_estado
   end
 end
 
+def cambiar_foto
+  RSpec.describe App do
+    describe '3. Cambiar foto de criador: ' do
+      it '3.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '3.2 Cambiar foto de criador criador' do
+        criador_id = 1.to_s
+        foto_criador_id = 'aldjfalkdjflkajslk1j2l3j12lm'
+        url = 'criador/cambiar_foto?criador_id=' + criador_id + '&foto_criador_id=' + foto_criador_id
+        test = App.new(url)
+        test.post()
+        puts test.response.body
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Se ha cambiado la foto del criador')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
 #crear
 cambiar_estado
+#cambiar_foto

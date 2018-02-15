@@ -64,10 +64,10 @@ sub cambiar_estado {
 }
 
 sub cambiar_foto {
-  my($self, $id, $criador_foto_id) = @_;
-  my $sth = $self->{_dbh}->prepare('UPDATE criadores SET criador_foto_id = ? WHERE id = ?')
+  my($self, $id, $foto_criador_id) = @_;
+  my $sth = $self->{_dbh}->prepare('UPDATE criadores SET foto_criador_id = ? WHERE id = ?')
     or die "prepare statement failed: $dbh->errstr()";
-  $sth->bind_param( 1, $criador_foto_id);
+  $sth->bind_param( 1, $foto_criador_id);
   $sth->bind_param( 2, $id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   $sth->finish;

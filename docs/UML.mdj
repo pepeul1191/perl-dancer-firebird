@@ -4211,7 +4211,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFhbRTmtgE5GWE="
 									},
-									"name": "criador_foto_id",
+									"name": "foto_criador_id",
 									"type": "TinyDB_ID",
 									"length": 0,
 									"primaryKey": false,

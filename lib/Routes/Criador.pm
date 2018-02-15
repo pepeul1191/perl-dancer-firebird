@@ -68,4 +68,28 @@ post '/cambiar_estado' => sub {
   return Encode::decode('utf8', JSON::to_json \%rpta);
 };
 
+post '/cambiar_foto' => sub {
+  my $self = shift;
+  my $criador_id = param('criador_id');
+  my $foto_criador_id = param('foto_criador_id');
+  my %rpta = ();
+  my $model= 'Model::Criador';
+  my $Criador= $model->new();
+  try {
+    $Criador->cambiar_foto($criador_id, $foto_criador_id);
+    $rpta{'tipo_mensaje'} = "success";
+    my @temp = ("Se ha cambiado la foto del criador");
+    $rpta{'mensaje'} = [@temp];
+    $Criador->commit();
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error en cambiar la foto del criador", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $Criador->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
 1;
