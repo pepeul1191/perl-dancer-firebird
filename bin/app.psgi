@@ -13,6 +13,7 @@ use Routes::Departamento;
 use Routes::EstadoCriador;
 use Routes::Pais;
 use Routes::Provincia;
+use Routes::Raza;
 
 builder {
   enable 'Deflater';
@@ -23,6 +24,7 @@ builder {
   mount '/estado_criador'      => Routes::EstadoCriador->to_app;
   mount '/pais'      => Routes::Pais->to_app;
   mount '/provincia'      => Routes::Provincia->to_app;
+  mount '/raza'      => Routes::Raza->to_app;
 }
 
 =begin comment
