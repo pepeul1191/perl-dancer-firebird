@@ -110,11 +110,13 @@ post '/asociar_raza' => sub {
       if ($nuevo) {
         my $temp_id = $nuevo->{'id'};
         my $raza_id = $nuevo->{'raza_id'};
-        my $id_generado = $TipoMascota->asociar_raza($raza_id, $tipo_mascota_id);
-        my %temp = ();
-        $temp{'temporal'} = $temp_id;
-        $temp{'nuevo_id'} = $id_generado;
-        push @array_nuevos, {%temp};
+        if($TipoMascota->existe_asociacion_raza($raza_id, $tipo_mascota_id) == 0){
+          my $id_generado = $TipoMascota->asociar_raza($raza_id, $tipo_mascota_id);
+          my %temp = ();
+          $temp{'temporal'} = $temp_id;
+          $temp{'nuevo_id'} = $id_generado;
+          push @array_nuevos, {%temp};
+        }
       }
     }
     for my $eliminado(@eliminados){

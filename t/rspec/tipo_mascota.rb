@@ -178,6 +178,7 @@ def asociar_raza
         url = 'tipo_mascota/asociar_raza?data=' + data
         test = App.new(url)
         test.post()
+        puts test.response.body
         expect(test.response.code).to eq(200)
         expect(test.response.body).not_to include('error')
         expect(test.response.body).to include('Se ha registrado la asociación/deasociación de las razas al tipo de mascota')

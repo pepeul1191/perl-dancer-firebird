@@ -84,16 +84,27 @@ sub raza {
   return @rpta;
 }
 
-sub asociar_raza {
+sub existe_asociacion_raza {
   my($self, $raza_id, $tipo_mascota_id) = @_;
-  my $sth = $self->{_dbh}->prepare('
-    INSERT INTO razas_tipo_mascotas (raza_id, tipo_mascota_id) VALUES (?,?)
-    WHERE NOT EXIST (SELECT id FROM razas_tipo_mascotas WHERE raza_id = ? AND tipo_mascota_id = ?)')
+  my $sth = $self->{_dbh}->prepare('SELECT COUNT(*) AS cantidad FROM razas_tipo_mascotas WHERE raza_id = ? AND tipo_mascota_id = ?')
     or die "prepare statement failed: $dbh->errstr()";
   $sth->bind_param( 1, $raza_id);
   $sth->bind_param( 2, $tipo_mascota_id);
-  $sth->bind_param( 3, $raza_id);
-  $sth->bind_param( 4, $tipo_mascota_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my $rpta;
+  while (my $ref = $sth->fetchrow_hashref()) {
+    $rpta = $ref->{'cantidad'};
+  }
+  $sth->finish;
+  return $rpta;
+}
+
+sub asociar_raza {
+  my($self, $raza_id, $tipo_mascota_id) = @_;
+  my $sth = $self->{_dbh}->prepare('INSERT INTO razas_tipo_mascotas (raza_id, tipo_mascota_id) VALUES (?,?)')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $raza_id);
+  $sth->bind_param( 2, $tipo_mascota_id);
   $sth->execute() or die "execution failed: $dbh->errstr()";
   $sth->finish;
 }
