@@ -32,5 +32,31 @@ def crear
     end
   end
 end
-#listar
-crear
+
+def cambiar_estado
+  RSpec.describe App do
+    describe '2. Cambiar estado de criador: ' do
+      it '2.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '2.2 Cambiar estado de criador criador' do
+        criador_id = 1.to_s
+        estado_criador_id = 2.to_s
+        url = 'criador/cambiar_estado?criador_id=' + criador_id + '&estado_criador_id=' + estado_criador_id
+        test = App.new(url)
+        test.post()
+        puts test.response.body
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Se ha cambiado el estado del criador')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
+#crear
+cambiar_estado
