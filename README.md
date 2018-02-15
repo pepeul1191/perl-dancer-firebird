@@ -52,9 +52,9 @@ Tipos de Datos de Columnas
 + :string=>String
 + :integer=>Integer
 + :date=>Date
-+ :datetime=>[Time, DateTime].freeze, 
-+ :time=>Sequel::SQLTime, 
-+ :boolean=>[TrueClass, FalseClass].freeze, 
++ :datetime=>[Time, DateTime].freeze,
++ :time=>Sequel::SQLTime,
++ :boolean=>[TrueClass, FalseClass].freeze,
 + :float=>Float
 + :decimal=>BigDecimal
 + :blob=>Sequel::SQL::Blob
@@ -67,3 +67,5 @@ Fuentes:
 + http://search.cpan.org/~xsawyerx/Dancer2-0.200002/lib/Dancer2/Manual/Deployment.pod
 + http://search.cpan.org/dist/Dancer/lib/Dancer/Deployment.pod
 + https://stackoverflow.com/questions/17144583/dbd-mysql-installed-but-still-error-install-drivermysql-failed-cant-locate
++ www.dacostabalboa.es/wp-content/uploads/2010/07/Plantila-base-datos-perros.xls
++ http://www.buggol.com/lista-razas-de-gatos.php

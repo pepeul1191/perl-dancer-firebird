@@ -125,7 +125,27 @@ def eliminar
   end
 end
 
-listar
+def listar_razas
+  RSpec.describe App do
+    describe '5. Listar Razas de Tipo de Mascota: ' do
+      it '5.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '5.2 Listar razas de tipo de mascota' do
+        url = 'tipo_mascota/listar_razas/1' # tipo_mascota_id
+        test = App.new(url)
+        test.post()
+        expect(test.response.code).to eq(200)
+      end
+    end
+  end
+end
+
+#listar
 #crear
 #editar
-eliminar
+#eliminar
+listar_razas
