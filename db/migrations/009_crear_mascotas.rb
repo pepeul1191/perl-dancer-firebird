@@ -13,13 +13,13 @@ Sequel.migration do
 
     alter_table(:mascotas) do
       add_foreign_key :criador_id, :criadores
-      add_foreign_key :tipo_mascota_id, :tipo_mascotas
+      add_foreign_key :raza_id, :razas
     end
 	end
 
   down do
     drop_column :mascotas, :criadro_id
-    drop_column :mascotas, :tipo_mascota_id
+    drop_column :mascotas, :raza_id
     drop_table(:mascotas)
 	end
 end
