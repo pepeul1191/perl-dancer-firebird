@@ -121,4 +121,60 @@ post '/cambiar_foto' => sub {
   return Encode::decode('utf8', JSON::to_json \%rpta);
 };
 
+post '/seguir_mascota' => sub {
+  my $self = shift;
+  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
+  my $criador_id = $data->{"criador_id"};
+  my $mascota_id = $data->{"mascota_id"};
+  my %rpta = ();
+  my $model= 'Model::Criador';
+  my $Criador= $model->new();
+  try {
+    if($Criador->existe_seguir($mascota_id, $criador_id) == 0){
+      $Criador->seguir_mascota($mascota_id, $criador_id);
+      $Criador->commit();
+      $rpta{'tipo_mensaje'} = "success";
+      my @temp = ("Ha comenzado a seguir esta mascota");
+      $rpta{'mensaje'} = [@temp];
+    }else{
+      $rpta{'tipo_mensaje'} = "success";
+      my @temp = ("Ud ya está siguiendo actualmente a dicha mascota");
+      $rpta{'mensaje'} = [@temp];
+    }
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error al intentar seguir la mascota", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $Criador->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
+post '/dejar_seguir_mascota' => sub {
+  my $self = shift;
+  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
+  my $criador_id = $data->{"criador_id"};
+  my $mascota_id = $data->{"mascota_id"};
+  my %rpta = ();
+  my $model= 'Model::Criador';
+  my $Criador= $model->new();
+  try {
+    $Criador->dejar_seguir_mascota($mascota_id, $criador_id);
+    $rpta{'tipo_mensaje'} = "success";
+    my @temp = ("Ha dejaado de seguir esta mascota");
+    $rpta{'mensaje'} = [@temp];
+    $Criador->commit();
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error al intentar dejar de seguir la mascota", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $Criador->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
 1;

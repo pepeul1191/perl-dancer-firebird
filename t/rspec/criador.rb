@@ -115,7 +115,63 @@ def editar
   end
 end
 
-crear
+def seguir_mascota
+  RSpec.describe App do
+    describe '5. Seguir mascota: ' do
+      it '5.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '5.2 Seguir mascota' do
+        data = {
+          :criador_id => 1,
+          :mascota_id => 1,
+        }.to_json
+        url = 'criador/seguir_mascota?data=' + data
+        test = App.new(url)
+        test.post()
+        puts test.response.body
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Ha comenzado a seguir esta mascota')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
+def dejar_seguir_mascota
+  RSpec.describe App do
+    describe '6. Dejar de seguir mascota: ' do
+      it '6.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '6.2 Dejar de seguir mascota' do
+        data = {
+          :criador_id => 1,
+          :mascota_id => 1,
+        }.to_json
+        url = 'criador/dejar_seguir_mascota?data=' + data
+        test = App.new(url)
+        test.post()
+        puts test.response.body
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Ha dejaado de seguir esta mascota')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
+#crear
 #cambiar_estado
 #cambiar_foto
 #editar
+seguir_mascota
+#dejar_seguir_mascota

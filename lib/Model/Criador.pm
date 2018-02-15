@@ -73,4 +73,39 @@ sub cambiar_foto {
   $sth->finish;
 }
 
+sub existe_seguir {
+  my($self, $mascota_id, $criador_id) = @_;
+  my $sth = $self->{_dbh}->prepare('SELECT COUNT(*) AS cantidad FROM seguidores WHERE mascota_id = ? AND criador_id = ?')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $mascota_id);
+  $sth->bind_param( 2, $criador_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my $rpta;
+  while (my $ref = $sth->fetchrow_hashref()) {
+    $rpta = $ref->{'cantidad'};
+  }
+  $sth->finish;
+  return $rpta;
+}
+
+sub seguir_mascota {
+  my($self, $mascota_id, $criador_id) = @_;
+  my $sth = $self->{_dbh}->prepare('INSERT INTO seguidores (mascota_id, criador_id) VALUES (?,?)')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $mascota_id);
+  $sth->bind_param( 2, $criador_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  $sth->finish;
+}
+
+sub dejar_seguir_mascota {
+  my($self, $mascota_id, $criador_id) = @_;
+  my $sth = $self->{_dbh}->prepare('DELETE FROM seguidores WHERE mascota_id = ? AND criador_id = ?')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $mascota_id);
+  $sth->bind_param( 2, $criador_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  $sth->finish;
+}
+
 1;
