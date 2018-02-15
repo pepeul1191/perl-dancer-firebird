@@ -83,6 +83,39 @@ def cambiar_foto
   end
 end
 
+
+def editar
+  RSpec.describe App do
+    describe '4. Editar criador: ' do
+      it '4.1 Conexión con backend' do
+        url = 'test/conexion'
+        test = App.new(url)
+        test.get()
+        expect(test.response.code).to eq(200)
+      end
+      it '4.2 Editar criador' do
+        data = {
+          :id => 1,
+          :nombres =>  'José Jesús',
+          :apellidos => 'Valdivia Caballero',
+          :telefono => '987731975',
+          :correo => 'jovaldiv@ulima.pe',
+          :distrito_id => 2,
+        }.to_json
+        url = 'criador/editar?criador=' + data
+        test = App.new(url)
+        test.post()
+        puts test.response.body
+        expect(test.response.code).to eq(200)
+        expect(test.response.body).not_to include('error')
+        expect(test.response.body).to include('Se ha editado el criador')
+        expect(test.response.body).to include('success')
+      end
+    end
+  end
+end
+
 #crear
-cambiar_estado
+#cambiar_estado
 #cambiar_foto
+editar
