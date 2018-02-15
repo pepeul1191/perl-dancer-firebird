@@ -62,4 +62,27 @@ sub eliminar {
   $sth->finish;
 }
 
+sub agregar_foto {
+  my($self, $mascota_id, $mascota_foto_id) = @_;
+  my $sth = $self->{_dbh}->prepare('INSERT INTO mascota_fotos (mascota_id, mascota_foto_id) VALUES (?,?)')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $mascota_id);
+  $sth->bind_param( 2, $mascota_foto_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my $id_generated = $self->{_dbh}->last_insert_id(undef, undef, undef, undef );
+  $sth->finish;
+  return $id_generated;
+}
+
+sub quitar_foto {
+  my($self, $id) = @_;
+  my $sth = $self->{_dbh}->prepare('DELETE FROM mascota_fotos WHERE id = ?')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my $id_generated = $self->{_dbh}->last_insert_id(undef, undef, undef, undef );
+  $sth->finish;
+  return $id_generated;
+}
+
 1;

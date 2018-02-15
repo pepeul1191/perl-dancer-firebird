@@ -73,5 +73,53 @@ post '/editar' => sub {
   return Encode::decode('utf8', JSON::to_json \%rpta);
 };
 
+post '/agregar_foto' => sub {
+  my $self = shift;
+  my $data = JSON::XS::decode_json(Encode::encode_utf8(param('data')));
+  my $mascota_id = $data->{"mascota_id"};
+  my $mascota_foto_id = $data->{"mascota_foto_id"};
+  my %rpta = ();
+  my $model= 'Model::Mascota';
+  my $Mascota= $model->new();
+  try {
+    my $id_generado = $Mascota->agregar_foto($mascota_id, $mascota_foto_id);
+    $rpta{'tipo_mensaje'} = "success";
+    my @temp = ("Se ha agregado una foto a la mascota", $id_generado);
+    $rpta{'mensaje'} = [@temp];
+    $Mascota->commit();
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error en agregar la foto a la mascota", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $Mascota->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
+post '/quitar_foto' => sub {
+  my $self = shift;
+  my $id = param('id');
+  my %rpta = ();
+  my $model= 'Model::Mascota';
+  my $Mascota= $model->new();
+  try {
+    $Mascota->quitar_foto($id);
+    $rpta{'tipo_mensaje'} = "success";
+    my @temp = ("Se ha quitado una foto a la mascota");
+    $rpta{'mensaje'} = [@temp];
+    $Mascota->commit();
+  } catch {
+    #warn "got dbi error: $_";
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ("Se ha producido un error en quitar la foto a la mascota", "" . $_);
+    $rpta{'mensaje'} = [@temp];
+    $Mascota->rollback();
+  };
+  #print("\n");print Dumper(%rpta);print("\n");
+  return Encode::decode('utf8', JSON::to_json \%rpta);
+};
+
 
 1;
