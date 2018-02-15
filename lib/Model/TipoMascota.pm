@@ -66,4 +66,22 @@ sub eliminar {
   $sth->finish;
 }
 
+sub raza {
+  my($self, $tipo_mascota_id) = @_;
+  my $sth = $self->{_dbh}->prepare('
+    SELECT RA.id, RA.nombre AS raza FROM razas_tipo_mascotas RTM
+    INNER JOIN razas RA ON RTM.raza_id = RA.id
+    INNER JOIN tipo_mascotas TM ON  RTM.tipo_mascota_id = TM.id
+    WHERE RTM.tipo_mascota_id = ?')
+    or die "prepare statement failed: $dbh->errstr()";
+  $sth->bind_param( 1, $tipo_mascota_id);
+  $sth->execute() or die "execution failed: $dbh->errstr()";
+  my @rpta;
+  while (my $ref = $sth->fetchrow_hashref()) {
+    push @rpta, $ref;
+  }
+  $sth->finish;
+  return @rpta;
+}
+
 1;

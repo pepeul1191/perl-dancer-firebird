@@ -135,9 +135,9 @@ def listar_razas
         expect(test.response.code).to eq(200)
       end
       it '5.2 Listar razas de tipo de mascota' do
-        url = 'tipo_mascota/listar_razas/1' # tipo_mascota_id
+        url = 'tipo_mascota/raza/1' # tipo_mascota_id
         test = App.new(url)
-        test.post()
+        test.get()
         expect(test.response.code).to eq(200)
       end
     end

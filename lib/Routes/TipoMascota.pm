@@ -78,4 +78,21 @@ post '/guardar' => sub {
   return Encode::decode('utf8', JSON::to_json \%rpta);
 };
 
+get '/raza/:tipo_mascota_id' => sub {
+  my $model= 'Model::TipoMascota';
+  my $tipo_mascota_id = param('tipo_mascota_id');
+  my $TipoMascota = $model->new();
+  try {
+    my  @rpta = $TipoMascota->raza($tipo_mascota_id);
+    return Encode::decode('utf8', JSON::to_json \@rpta);
+  }
+  catch {
+    my %rpta = ();
+    $rpta{'tipo_mensaje'} = "error";
+    my @temp = ('Se ha producido un error en listar las razas de dicho tipo de mascota', '' . $_);
+    $rpta{'mensaje'} = [@temp];
+    return Encode::decode('utf8', JSON::to_json \%rpta);
+  };
+};
+
 1;
