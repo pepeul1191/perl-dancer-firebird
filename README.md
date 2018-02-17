@@ -8,16 +8,16 @@ Instalación de paquetes de CPANM
 
 Arrancar Dancer:
 
-    $ plackup -r bin/app.psgi
+    $ plackup -r bin/app.psgi -p 4000
 
 Arrancar Dancer con autoreload luego de hacer cambios:
 
-    $ plackup -L Shotgun bin/app.psgi
+    $ plackup -L Shotgun bin/app.psgi -p 4000
 
 
 Arrancar en modo de producción con workers:
 
-    $ plackup -E deployment -s Starman --workers=50 -p 5000 -a bin/app.psgi
+    $ plackup -E deployment -s Starman --workers=50 -p 4000 -a bin/app.psgi
 
 Para imprimir variables:
 
@@ -28,9 +28,9 @@ Para imprimir variables:
 
 Ejecutar migración
 
-    $ sequel -m path/to/migrations postgres://host/database
-    $ sequel -m path/to/migrations sqlite://db/db_estaciones.db
-    $ sequel -m path/to/migrations mysql://root:123@localhost/gestion
+    $ sequel -m db/migrations -M #version postgres://host/database
+    $ sequel -m db/migrations -M #version sqlite://db/gestion.db
+    $ sequel -m db/migrations -M #version mysql://root:123@localhost/gestion
 
 Ejecutar el 'down' de las migraciones de la última a la primera:
 

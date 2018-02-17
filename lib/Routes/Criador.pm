@@ -21,14 +21,13 @@ post '/crear' => sub {
   my $nombres = $data->{"nombres"};
   my $apellidos = $data->{"apellidos"};
   my $telefono = $data->{"telefono"};
-  my $correo = $data->{"correo"};
   my $distrito_id = $data->{"distrito_id"};
   my $usuario_id = $data->{"usuario_id"};
   my %rpta = ();
   my $model= 'Model::Criador';
   my $Criador= $model->new();
   try {
-    my $id_generado = $Criador->crear($nombres, $apellidos, $telefono, $correo, $distrito_id, $usuario_id);
+    my $id_generado = $Criador->crear($nombres, $apellidos, $telefono, $distrito_id, $usuario_id);
     $rpta{'tipo_mensaje'} = "success";
     my @temp = ("Se ha registrado el criador", $id_generado);
     $rpta{'mensaje'} = [@temp];
@@ -51,13 +50,12 @@ post '/editar' => sub {
   my $nombres = $data->{"nombres"};
   my $apellidos = $data->{"apellidos"};
   my $telefono = $data->{"telefono"};
-  my $correo = $data->{"correo"};
   my $distrito_id = $data->{"distrito_id"};
   my %rpta = ();
   my $model= 'Model::Criador';
   my $Criador= $model->new();
   try {
-    $Criador->editar($id, $nombres, $apellidos, $telefono, $correo, $distrito_id);
+    $Criador->editar($id, $nombres, $apellidos, $telefono, $distrito_id);
     $rpta{'tipo_mensaje'} = "success";
     my @temp = ("Se ha editado el criador");
     $rpta{'mensaje'} = [@temp];

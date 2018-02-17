@@ -44,7 +44,7 @@ get 'db/crear' => sub {
     my $model = 'Model::Prueba';
     my $prueba = $model->new();
     $rpta{'id'} = $prueba->crear($nombres, $paterno, $materno, $correo);
-  } 
+  }
   catch {
     #warn "got dbi error: $_";
     $rpta{'tipo_mensaje'} = "error";

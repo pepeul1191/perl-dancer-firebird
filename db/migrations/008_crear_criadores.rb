@@ -7,7 +7,6 @@ Sequel.migration do
       String :nombres, null: false, size: 40
       String :apellidos, null: false, size: 40
       String :telefono, null: false, size: 25
-      String :correo, null: false, size: 40
       String :usuario_id, null: false, size: 40
       String :foto_criador_id, null: true, size: 40
     end

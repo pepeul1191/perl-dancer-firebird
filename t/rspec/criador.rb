@@ -16,7 +16,6 @@ def crear
           :nombres =>  'Pepe',
           :apellidos => 'Valdivia',
           :telefono => '987731975',
-          :correo => 'pepe@ulima.pe',
           :distrito_id => 2,
           :usuario_id => '123'
         }.to_json
@@ -99,7 +98,6 @@ def editar
           :nombres =>  'José Jesús',
           :apellidos => 'Valdivia Caballero',
           :telefono => '987731975',
-          :correo => 'jovaldiv@ulima.pe',
           :distrito_id => 2,
         }.to_json
         url = 'criador/editar?criador=' + data
@@ -170,8 +168,8 @@ def dejar_seguir_mascota
 end
 
 #crear
+editar
 #cambiar_estado
 #cambiar_foto
-#editar
-seguir_mascota
+#seguir_mascota
 #dejar_seguir_mascota
